@@ -207,38 +207,38 @@ def print_fit_energy(fc : FitCollection):
         warnings.warn(f' mu  = {par[1]} ', UserWarning)
 
 
-def plot_fit_energy_chi2(fc : FitCollection):
+# def plot_fit_energy_chi2(fc : FitCollection):
+#
+#     if fc.fr.valid:
+#         x  = fc.fp.x
+#         f  = fc.fp.f
+#         y  = fc.fp.y
+#         yu = fc.fp.yu
+#         plt.errorbar(x, (f(x) - y) / yu, 1, np.diff(x)[0] / 2, fmt="p", c="k")
+#         lims = plt.xlim()
+#         plt.plot(lims, (0, 0), "g--")
+#         plt.xlim(*lims)
+#         plt.ylim(-5, +5)
+#     else:
+#         warnings.warn(f' fit did not succeed, cannot plot ', UserWarning)
 
-    if fc.fr.valid:
-        x  = fc.fp.x
-        f  = fc.fp.f
-        y  = fc.fp.y
-        yu = fc.fp.yu
-        plt.errorbar(x, (f(x) - y) / yu, 1, np.diff(x)[0] / 2, fmt="p", c="k")
-        lims = plt.xlim()
-        plt.plot(lims, (0, 0), "g--")
-        plt.xlim(*lims)
-        plt.ylim(-5, +5)
-    else:
-        warnings.warn(f' fit did not succeed, cannot plot ', UserWarning)
 
-
-def display_energy_fit_and_chi2(fc : FitCollection, pl : PlotLabels, figsize : Tuple[int] =(6,6),
-                                legend_loc : str = 'best'):
-    if fc.fr.valid:
-        fig = plt.figure(figsize=figsize)
-        #ax = fig.add_subplot(1, 1, 1)
-        #ax.legend(fontsize= 10, loc=legend_loc)
-        frame_data = plt.gcf().add_axes((.1, .3,.8, .6))
-        plot_energy_fit(fc)
-        labels(pl)
-        frame_res = plt.gcf().add_axes((.1, .1,
-                                 .8, .2))
-        frame_data.set_xticklabels([])
-
-        plot_energy_fit_chi2(fc)
-    else:
-        warnings.warn(f' fit did not succeed, cannot display ', UserWarning)
+# def display_energy_fit_and_chi2(fc : FitCollection, pl : PlotLabels, figsize : Tuple[int] =(6,6),
+#                                 legend_loc : str = 'best'):
+#     if fc.fr.valid:
+#         fig = plt.figure(figsize=figsize)
+#         #ax = fig.add_subplot(1, 1, 1)
+#         #ax.legend(fontsize= 10, loc=legend_loc)
+#         frame_data = plt.gcf().add_axes((.1, .3,.8, .6))
+#         plot_energy_fit(fc)
+#         labels(pl)
+#         frame_res = plt.gcf().add_axes((.1, .1,
+#                                  .8, .2))
+#         frame_data.set_xticklabels([])
+#
+#         plot_energy_fit_chi2(fc)
+#     else:
+#         warnings.warn(f' fit did not succeed, cannot display ', UserWarning)
 
 
 
@@ -358,50 +358,50 @@ def plot_resolution_r_z(Ri : Iterable[float],
     plt.show()
 
 
-def fit_gaussian_experiments(exps    : np.array,
-                             nbins   : int       = 50,
-                             range   : Range     = (9e+3, 11e+3),
-                             n_sigma : int       =3)->List[FitCollection]:
-    return [fit_energy(e, nbins, range, n_sigma) for e in exps]
+# def fit_gaussian_experiments(exps    : np.array,
+#                              nbins   : int       = 50,
+#                              range   : Range     = (9e+3, 11e+3),
+#                              n_sigma : int       =3)->List[FitCollection]:
+#     return [fit_energy(e, nbins, range, n_sigma) for e in exps]
 
 
-def fit_gaussian_experiments_variable_mean_and_std(means   : np.array,
-                                                   stds    : np.array,
-                                                   exps    : np.array,
-                                                   bins    : int = 50,
-                                                   n_sigma : int =3)->Iterable[List[float]]:
-    l = len(stds)
-    SEED = []
-    MU = []
-    STD = []
-    AVG = []
-    RMS = []
-    CHI2 = []
-    for i,mean in enumerate(means):
-        for j, std in enumerate(stds):
-            k = i*l + j
-            e = exps[k]
-            r = mean - n_sigma * std, mean + n_sigma * std
-            bin_size = (r[1] - r[0]) / bins
-            gp = gaussian_parameters(e, range = r, bin_size=bin_size)
-            fc = fit_energy(e, nbins=bins, range=r, n_sigma = n_sigma)
-            SEED.append(Measurement(mean, std))
-            MU.append(Measurement(fc.fr.par[1], fc.fr.err[1]))
-            STD.append(Measurement(fc.fr.par[2], fc.fr.err[2] ))
-            AVG.append(gp.mu)
-            RMS.append(gp.std)
-            CHI2.append(fc.fr.chi2)
+# def fit_gaussian_experiments_variable_mean_and_std(means   : np.array,
+#                                                    stds    : np.array,
+#                                                    exps    : np.array,
+#                                                    bins    : int = 50,
+#                                                    n_sigma : int =3)->Iterable[List[float]]:
+#     l = len(stds)
+#     SEED = []
+#     MU = []
+#     STD = []
+#     AVG = []
+#     RMS = []
+#     CHI2 = []
+#     for i,mean in enumerate(means):
+#         for j, std in enumerate(stds):
+#             k = i*l + j
+#             e = exps[k]
+#             r = mean - n_sigma * std, mean + n_sigma * std
+#             bin_size = (r[1] - r[0]) / bins
+#             gp = gaussian_parameters(e, range = r, bin_size=bin_size)
+#             fc = fit_energy(e, nbins=bins, range=r, n_sigma = n_sigma)
+#             SEED.append(Measurement(mean, std))
+#             MU.append(Measurement(fc.fr.par[1], fc.fr.err[1]))
+#             STD.append(Measurement(fc.fr.par[2], fc.fr.err[2] ))
+#             AVG.append(gp.mu)
+#             RMS.append(gp.std)
+#             CHI2.append(fc.fr.chi2)
+#
+#     return SEED, MU, STD, AVG, RMS, CHI2
 
-    return SEED, MU, STD, AVG, RMS, CHI2
 
-
-def gaussian_params_from_fcs(fcs : FitCollection) ->Iterable[float]:
-    mus   = np.array([fc.fr.par[1] for fc in fcs])
-    umus  = np.array([fc.fr.err[1] for fc in fcs])
-    stds  = np.array([fc.fr.par[2] for fc in fcs])
-    ustds = np.array([fc.fr.err[2] for fc in fcs])
-    chi2s = np.array([fc.fr.chi2   for fc in fcs])
-    return mus, umus, stds, ustds, chi2s
+# def gaussian_params_from_fcs(fcs : FitCollection) ->Iterable[float]:
+#     mus   = np.array([fc.fr.par[1] for fc in fcs])
+#     umus  = np.array([fc.fr.err[1] for fc in fcs])
+#     stds  = np.array([fc.fr.par[2] for fc in fcs])
+#     ustds = np.array([fc.fr.err[2] for fc in fcs])
+#     chi2s = np.array([fc.fr.chi2   for fc in fcs])
+#     return mus, umus, stds, ustds, chi2s
 
 
 def par_and_err_from_seed(seed : GaussPar) ->Tuple[np.array, np.array]:

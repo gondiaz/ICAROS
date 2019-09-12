@@ -10,7 +10,7 @@ from . kr_types       import ASectorMap
 from . kr_types       import KrFileName
 from pandas           import DataFrame, Series
 
-from . core_functions import file_numbers_from_file_range
+#from . core_functions import file_numbers_from_file_range
 from pandas import Series
 
 def filenames_from_paths(run_number  : int,
@@ -70,30 +70,30 @@ def file_numbers_from_file_range(file_range : Tuple[int, int])->List[str]:
     return N
 
 
-def filenames_from_list(krfn : KrFileName,
-                        input_path       : str,
-                        output_path      : str,
-                        map_path         : str)->KrFileName:
+# def filenames_from_list(krfn : KrFileName,
+#                         input_path       : str,
+#                         output_path      : str,
+#                         map_path         : str)->KrFileName:
+#
+#     path  = input_path
+#     opath = output_path
+#     mpath = map_path
+#
+#     ifn = [os.path.expandvars(f"{path}/{file_name}") for file_name in krfn.input_file_names]
+#     ofn = os.path.expandvars(f"{opath}/{krfn.output_file_name}")
+#     mfn = os.path.expandvars(f"{mpath}/{krfn.map_file_name}")
+#     mts = os.path.expandvars(f"{mpath}/{krfn.map_file_name_ts}")
+#     efn = os.path.expandvars(f"{mpath}/{krfn.emap_file_name}")
+#
+#     return KrFileName(ifn, ofn, mfn, mts, efn)
 
-    path  = input_path
-    opath = output_path
-    mpath = map_path
-
-    ifn = [os.path.expandvars(f"{path}/{file_name}") for file_name in krfn.input_file_names]
-    ofn = os.path.expandvars(f"{opath}/{krfn.output_file_name}")
-    mfn = os.path.expandvars(f"{mpath}/{krfn.map_file_name}")
-    mts = os.path.expandvars(f"{mpath}/{krfn.map_file_name_ts}")
-    efn = os.path.expandvars(f"{mpath}/{krfn.emap_file_name}")
-
-    return KrFileName(ifn, ofn, mfn, mts, efn)
 
 
-
-def write_monitor_vars(mdf : Series, log_filename : str):
-    mdf.to_hdf(log_filename,
-              key     = "LOG"  , mode         = "w",
-              format  = "table", data_columns = True,
-              complib = "zlib" , complevel    = 4)
+# def write_monitor_vars(mdf : Series, log_filename : str):
+#     mdf.to_hdf(log_filename,
+#               key     = "LOG"  , mode         = "w",
+#               format  = "table", data_columns = True,
+#               complib = "zlib" , complevel    = 4)
 
 
 
@@ -121,43 +121,43 @@ def write_maps(asm : ASectorMap, filename : str):
     asm.mapinfo.to_hdf(filename, key='mapinfo',     mode='a')
 
 
-def write_maps_ts(aMaps : Iterable[ASectorMap], ts: np.array, filename : str):
-
-    assert len(ts) == len(aMaps)
-    tsdf = pd.Series(ts)
-    tsdf.to_hdf(filename, key='ts', mode='w')
-    for i, t in enumerate(ts):
-        asm = aMaps[i]
-
-        asm.chi2.to_hdf(filename, key =f'chi2_{i}', mode='a')
-        asm.e0.to_hdf(filename,   key =f'e0_{i}',   mode='a')
-        asm.e0u.to_hdf(filename,  key =f'e0u_{i}',  mode='a')
-        asm.lt.to_hdf(filename,   key =f'lt_{i}',   mode='a')
-        asm.ltu.to_hdf(filename,  key =f'ltu_{i}',  mode='a')
-
-
-def read_maps_ts(filename : str)->Tuple[Series, Dict[int, ASectorMap]]:
-
-    tsMaps = {}
-    ts = pd.read_hdf(filename, 'ts')
-
-    for i in ts.index:
-        chi2  = pd.read_hdf(filename, f'chi2_{i}')
-        e0    = pd.read_hdf(filename, f'e0_{i}')
-        e0u   = pd.read_hdf(filename, f'e0u_{i}')
-        lt    = pd.read_hdf(filename, f'lt_{i}')
-        ltu   = pd.read_hdf(filename, f'ltu_{i}')
-        tsMaps[i] = ASectorMap(chi2, e0, lt, e0u, ltu)
-    return ts, tsMaps
+# def write_maps_ts(aMaps : Iterable[ASectorMap], ts: np.array, filename : str):
+#
+#     assert len(ts) == len(aMaps)
+#     tsdf = pd.Series(ts)
+#     tsdf.to_hdf(filename, key='ts', mode='w')
+#     for i, t in enumerate(ts):
+#         asm = aMaps[i]
+#
+#         asm.chi2.to_hdf(filename, key =f'chi2_{i}', mode='a')
+#         asm.e0.to_hdf(filename,   key =f'e0_{i}',   mode='a')
+#         asm.e0u.to_hdf(filename,  key =f'e0u_{i}',  mode='a')
+#         asm.lt.to_hdf(filename,   key =f'lt_{i}',   mode='a')
+#         asm.ltu.to_hdf(filename,  key =f'ltu_{i}',  mode='a')
 
 
-def write_energy_map(em : DataFrame, filename : str):
-    em.to_hdf(filename, key='e', mode='w')
+# def read_maps_ts(filename : str)->Tuple[Series, Dict[int, ASectorMap]]:
+#
+#     tsMaps = {}
+#     ts = pd.read_hdf(filename, 'ts')
+#
+#     for i in ts.index:
+#         chi2  = pd.read_hdf(filename, f'chi2_{i}')
+#         e0    = pd.read_hdf(filename, f'e0_{i}')
+#         e0u   = pd.read_hdf(filename, f'e0u_{i}')
+#         lt    = pd.read_hdf(filename, f'lt_{i}')
+#         ltu   = pd.read_hdf(filename, f'ltu_{i}')
+#         tsMaps[i] = ASectorMap(chi2, e0, lt, e0u, ltu)
+#     return ts, tsMaps
 
 
-def read_energy_map(filename : str)->DataFrame:
-    me0  = pd.read_hdf(filename, 'e')
-    return me0
+# def write_energy_map(em : DataFrame, filename : str):
+#     em.to_hdf(filename, key='e', mode='w')
+
+
+# def read_energy_map(filename : str)->DataFrame:
+#     me0  = pd.read_hdf(filename, 'e')
+#     return me0
 
 
 def read_maps(filename : str)->ASectorMap:

@@ -79,16 +79,16 @@ def gauss(x, amp, mu, sigma):
     return amp/(2*np.pi)**.5/sigma * np.exp(-0.5*(x-mu)**2./sigma**2.)
 
 
-def polynom(x, *coeffs):
-    return np.polynomial.polynomial.polyval(x, coeffs)
+# def polynom(x, *coeffs):
+#     return np.polynomial.polynomial.polyval(x, coeffs)
 
 
-def expo(x, const, mean):
-    return const * np.exp(x/mean)
+# def expo(x, const, mean):
+#     return const * np.exp(x/mean)
 
 
-def power(x, const, pow_):
-    return const * np.power(x, pow_)
+# def power(x, const, pow_):
+#     return const * np.power(x, pow_)
 
 
 # ###########################################################
@@ -233,104 +233,104 @@ def profileX(xdata, ydata, nbins=100,
     return bin_centers, mean_, deviation_
 
 
-def profileY(xdata, ydata, nbins = 100,
-             yrange=None, xrange=None,
-             std=False, drop_nan=True):
-    """
-    Compute the y-axis binned average of a dataset.
+# def profileY(xdata, ydata, nbins = 100,
+#              yrange=None, xrange=None,
+#              std=False, drop_nan=True):
+#     """
+#     Compute the y-axis binned average of a dataset.
+#
+#     Parameters
+#     ----------
+#     xdata, ydata : 1-dim np.ndarray
+#         x and y coordinates from a dataset.
+#     nbins : int
+#         Number of divisions in the y axis.
+#     yrange : tuple of ints/floats or None, optional
+#         Range over the y axis. Defaults to dataset extremes.
+#     xrange : tuple of ints/floats or None, optional
+#         Range over the x axis. Defaults to dataset extremes.
+#     drop_nan : bool, optional
+#         Exclude empty bins. Defaults to True.
+#
+#     Returns
+#     -------
+#     x_out : 1-dim np.ndarray.
+#         Bin centers.
+#     y_out : 1-dim np.ndarray
+#         Data average for each bin.
+#     y_err : 1-dim np.ndarray
+#         Average error for each bin.
+#     """
+#     return profileX(ydata, xdata, nbins, yrange, xrange, std, drop_nan)
 
-    Parameters
-    ----------
-    xdata, ydata : 1-dim np.ndarray
-        x and y coordinates from a dataset.
-    nbins : int
-        Number of divisions in the y axis.
-    yrange : tuple of ints/floats or None, optional
-        Range over the y axis. Defaults to dataset extremes.
-    xrange : tuple of ints/floats or None, optional
-        Range over the x axis. Defaults to dataset extremes.
-    drop_nan : bool, optional
-        Exclude empty bins. Defaults to True.
 
-    Returns
-    -------
-    x_out : 1-dim np.ndarray.
-        Bin centers.
-    y_out : 1-dim np.ndarray
-        Data average for each bin.
-    y_err : 1-dim np.ndarray
-        Average error for each bin.
-    """
-    return profileX(ydata, xdata, nbins, yrange, xrange, std, drop_nan)
-
-
-def profileXY(xdata, ydata, zdata, nbinsx, nbinsy,
-              xrange=None, yrange=None, zrange=None,
-              std=False, drop_nan=True):
-    """
-    Compute the xy-axis binned average of a dataset.
-
-    Parameters
-    ----------
-    xdata, ydata, zdata : 1-dim np.ndarray
-        x, y, z coordinates from a dataset.
-    nbinsx, nbinsy : int
-        Number of divisions in each axis.
-    xrange : tuple of ints/floats or None, optional
-        Range over the x axis. Defaults to dataset extremes.
-    yrange : tuple of ints/floats or None, optional
-        Range over the y axis. Defaults to dataset extremes.
-    zrange : tuple of ints/floats or None, optional
-        Range over the z axis. Defaults to dataset extremes.
-    drop_nan : bool, optional
-        Exclude empty bins. Defaults to True.
-
-    Returns
-    -------
-    x_out : 1-dim np.ndarray.
-        Bin centers in the x axis.
-    y_out : 1-dim np.ndarray.
-        Bin centers in the y axis.
-    z_out : 1-dim np.ndarray
-        Data average for each bin.
-    z_err : 1-dim np.ndarray
-        Average error for each bin.
-    """
-    if xrange is None: xrange = np.min(xdata), np.max(xdata)
-    if yrange is None: yrange = np.min(ydata), np.max(ydata)
-
-    selection  = coref.in_range(xdata, *xrange)
-    selection &= coref.in_range(ydata, *yrange)
-    xdata      = xdata[selection]
-    ydata      = ydata[selection]
-    zdata      = zdata[selection]
-
-    if zrange is not None:
-        selection = coref.in_range(zdata, *zrange)
-        xdata     = xdata[selection]
-        ydata     = ydata[selection]
-        zdata     = zdata[selection]
-
-    bin_edges_x   = np.linspace(*xrange, nbinsx + 1)
-    bin_edges_y   = np.linspace(*yrange, nbinsy + 1)
-    bin_centers_x = coref.shift_to_bin_centers(bin_edges_x)
-    bin_centers_y = coref.shift_to_bin_centers(bin_edges_y)
-    bin_numbers_x = np.digitize(xdata, bin_edges_x, right=False)
-    bin_numbers_y = np.digitize(ydata, bin_edges_y, right=False)
-    df            = pd.DataFrame(dict(binx=bin_numbers_x, biny=bin_numbers_y, z=zdata))
-    gb            = df.groupby(["binx", "biny"]).z
-
-    shape     = nbinsx, nbinsy
-    mean      = np.zeros(shape)
-    deviation = np.zeros(shape)
-
-    mean_       = gb.mean().values
-    deviation_  = gb.std () if std else gb.std() / gb.size()**0.5
-    (indices_x,
-     indices_y) = map(np.array, zip(*deviation_.index.values))
-
-    notnan = ~np.isnan(deviation_.values)
-    mean     [indices_x - 1, indices_y - 1] = mean_
-    deviation[indices_x - 1, indices_y - 1] = np.where(notnan, deviation_.values, 0)
-
-    return bin_centers_x, bin_centers_y, mean, deviation
+# def profileXY(xdata, ydata, zdata, nbinsx, nbinsy,
+#               xrange=None, yrange=None, zrange=None,
+#               std=False, drop_nan=True):
+#     """
+#     Compute the xy-axis binned average of a dataset.
+#
+#     Parameters
+#     ----------
+#     xdata, ydata, zdata : 1-dim np.ndarray
+#         x, y, z coordinates from a dataset.
+#     nbinsx, nbinsy : int
+#         Number of divisions in each axis.
+#     xrange : tuple of ints/floats or None, optional
+#         Range over the x axis. Defaults to dataset extremes.
+#     yrange : tuple of ints/floats or None, optional
+#         Range over the y axis. Defaults to dataset extremes.
+#     zrange : tuple of ints/floats or None, optional
+#         Range over the z axis. Defaults to dataset extremes.
+#     drop_nan : bool, optional
+#         Exclude empty bins. Defaults to True.
+#
+#     Returns
+#     -------
+#     x_out : 1-dim np.ndarray.
+#         Bin centers in the x axis.
+#     y_out : 1-dim np.ndarray.
+#         Bin centers in the y axis.
+#     z_out : 1-dim np.ndarray
+#         Data average for each bin.
+#     z_err : 1-dim np.ndarray
+#         Average error for each bin.
+#     """
+#     if xrange is None: xrange = np.min(xdata), np.max(xdata)
+#     if yrange is None: yrange = np.min(ydata), np.max(ydata)
+#
+#     selection  = coref.in_range(xdata, *xrange)
+#     selection &= coref.in_range(ydata, *yrange)
+#     xdata      = xdata[selection]
+#     ydata      = ydata[selection]
+#     zdata      = zdata[selection]
+#
+#     if zrange is not None:
+#         selection = coref.in_range(zdata, *zrange)
+#         xdata     = xdata[selection]
+#         ydata     = ydata[selection]
+#         zdata     = zdata[selection]
+#
+#     bin_edges_x   = np.linspace(*xrange, nbinsx + 1)
+#     bin_edges_y   = np.linspace(*yrange, nbinsy + 1)
+#     bin_centers_x = coref.shift_to_bin_centers(bin_edges_x)
+#     bin_centers_y = coref.shift_to_bin_centers(bin_edges_y)
+#     bin_numbers_x = np.digitize(xdata, bin_edges_x, right=False)
+#     bin_numbers_y = np.digitize(ydata, bin_edges_y, right=False)
+#     df            = pd.DataFrame(dict(binx=bin_numbers_x, biny=bin_numbers_y, z=zdata))
+#     gb            = df.groupby(["binx", "biny"]).z
+#
+#     shape     = nbinsx, nbinsy
+#     mean      = np.zeros(shape)
+#     deviation = np.zeros(shape)
+#
+#     mean_       = gb.mean().values
+#     deviation_  = gb.std () if std else gb.std() / gb.size()**0.5
+#     (indices_x,
+#      indices_y) = map(np.array, zip(*deviation_.index.values))
+#
+#     notnan = ~np.isnan(deviation_.values)
+#     mean     [indices_x - 1, indices_y - 1] = mean_
+#     deviation[indices_x - 1, indices_y - 1] = np.where(notnan, deviation_.values, 0)
+#
+#     return bin_centers_x, bin_centers_y, mean, deviation

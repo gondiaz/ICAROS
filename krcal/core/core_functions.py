@@ -51,29 +51,29 @@ def in_range(data, minval=-np.inf, maxval=np.inf):
     return (minval <= data) & (data < maxval)
 
 
-def data_frames_are_identical(df1 : DataFrame, df2 : DataFrame)->bool:
-    """
-    Compare two data frames
+# def data_frames_are_identical(df1 : DataFrame, df2 : DataFrame)->bool:
+#     """
+#     Compare two data frames
+#
+#     Parameters
+#     ----------
+#     df1, df2:
+#         Data Frames to be compared
+#
+#     Returns
+#     -------
+#         A bool: True if all elements of the DFs are identical False otherwise
+#     """
+#
+#     df = df1 == df2 # the resulting df is a df of bools.
+#
+#     # first all() gives a bool per column, creating a Series,
+#     # seond all() gives a bool for the Series
+#     return df.eq(True).all().all()
 
-    Parameters
-    ----------
-    df1, df2:
-        Data Frames to be compared
 
-    Returns
-    -------
-        A bool: True if all elements of the DFs are identical False otherwise
-    """
-
-    df = df1 == df2 # the resulting df is a df of bools.
-
-    # first all() gives a bool per column, creating a Series,
-    # seond all() gives a bool for the Series
-    return df.eq(True).all().all()
-
-
-def phirad_to_deg(r : float)-> float:
-    return (r + pi) * 180 / pi
+# def phirad_to_deg(r : float)-> float:
+#     return (r + pi) * 180 / pi
 
 
 def value_from_measurement(mL : Iterable[Measurement]) -> np.array:
@@ -91,10 +91,10 @@ def time_delta_from_time(T):
     # return np.array(dt)
 
 
-def find_nearest(array : np.array, value : Number)->Number:
-    """Return the array element nearest to value"""
-    idx = (np.abs(array-value)).argmin()
-    return array[idx]
+# def find_nearest(array : np.array, value : Number)->Number:
+#     """Return the array element nearest to value"""
+#     idx = (np.abs(array-value)).argmin()
+#     return array[idx]
 
 
 def divide_np_arrays(num : np.array, denom : np.array) -> np.array:
@@ -106,17 +106,17 @@ def divide_np_arrays(num : np.array, denom : np.array) -> np.array:
     return ratio
 
 
-def file_numbers_from_file_range(file_range : Tuple[int, int])->List[str]:
-    numbers = range(*file_range)
-    N=[]
-    for number in numbers:
-        if number < 10:
-            N.append(f"000{number}")
-        elif 10 <= number < 100:
-            N.append(f"00{number}")
-        elif 100 <= number < 1000:
-            N.append(f"0{number}")
-        else:
-            N.append(f"{number}")
-
-    return N
+# def file_numbers_from_file_range(file_range : Tuple[int, int])->List[str]:
+#     numbers = range(*file_range)
+#     N=[]
+#     for number in numbers:
+#         if number < 10:
+#             N.append(f"000{number}")
+#         elif 10 <= number < 100:
+#             N.append(f"00{number}")
+#         elif 100 <= number < 1000:
+#             N.append(f"0{number}")
+#         else:
+#             N.append(f"{number}")
+#
+#     return N

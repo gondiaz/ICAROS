@@ -33,7 +33,7 @@ from . kr_types             import Number, Int, Range, Array
 from . kr_types             import KrBins, KrNBins, KrRanges, KrTimes
 from . kr_types             import KrEvent, FitType, FitParTS
 from . kr_types             import HistoPar2, ProfilePar, FitPar, KrSector
-from . core_functions       import phirad_to_deg
+#from . core_functions       import phirad_to_deg
 from . histo_functions      import h1, h1d, h2, h2d, plot_histo
 
 from typing                 import List, Tuple, Sequence, Iterable, Dict
@@ -216,82 +216,82 @@ def fit_map_xy_df(selection_map : Dict[int, List[DataFrame]],
     return fMAP
 
 
-def fit_fcs_in_rphi_sectors_df(sector        : int,
-                               selection_map : Dict[int, List[DataFrame]],
-                               event_map     : DataFrame,
-                               n_time_bins   : int,
-                               time_diffs    : np.array,
-                               nbins_z       : int,
-                               nbins_e       : int,
-                               range_z       : Tuple[float, float],
-                               range_e       : Tuple[float, float],
-                               energy        : str                 = 'S2e',
-                               z             : str                 = 'Z',
-                               fit           : FitType             = FitType.unbined,
-                               n_min         : int                 = 100)->List[FitParTS]:
-    """
-    Returns fits to a (radial) sector of a RPHI-time series map
-
-        Parameters
-        ----------
-            sector
-                Radial sector where the fit is performed.
-            selection_map
-                A map of selected events defined as Dict[int, List[KrEvent]]
-            event_map
-                An event map defined as a DataFrame
-            n_time_bins
-                Number of time bins for the time series.
-            time_diffs
-                Vector of time differences for the time series.
-            nbins_z
-                Number of bins in Z for the fit.
-            nbins_e
-                Number of bins in energy.
-            range_z
-                Range in Z for fit.
-            range_e
-                Range in energy.
-            energy:
-                Takes two values: S2e (uses S2e field in kre) or E (used E field on kre).
-                This field allows to select fits over uncorrected (S2e) or corrected (E) energies.
-            fit
-                Selects fit type.
-            n_min
-                Minimum number of events for fit.
-
-        Returns
-        -------
-            A List[FitParTS], one FitParTs per PHI sector.
-
-        @dataclass
-        class FitParTS:             # Fit parameters Time Series
-            ts   : np.array          # contains the time series (integers expressing time differences)
-            e0   : np.array          # e0 fitted in time series
-            lt   : np.array
-            c2   : np.array
-            e0u  : np.array          # e0 error fitted in time series
-            ltu  : np.array
-
-    """
-
-    wedges    =[len(kre) for kre in selection_map.values() ]  # number of wedges per sector
-    tfrst     = time_diffs[0]
-    tlast     = time_diffs[-1]
-
-    fps =[]
-    for i in range(wedges[sector]):
-        if event_map[sector][i] > n_min:
-            ts, masks =  get_time_series_df(n_time_bins, (tfrst, tlast), selection_map[sector][i])
-            fp  = time_fcs_df(ts, masks, selection_map[sector][i],
-                              nbins_z, nbins_e, range_z, range_e, energy, z, fit)
-        else:
-            warnings.warn(f'Cannot fit: events in s/w[{sector}][{i}] ={event_map[sector][i]} < {n_min}',
-                         UserWarning)
-
-            dum = np.zeros(len(ts), dtype=float)
-            dum.fill(np.nan)
-            fp  = FitParTS(ts, dum, dum, dum, dum, dum)
-
-        fps.append(fp)
-    return fps
+# def fit_fcs_in_rphi_sectors_df(sector        : int,
+#                                selection_map : Dict[int, List[DataFrame]],
+#                                event_map     : DataFrame,
+#                                n_time_bins   : int,
+#                                time_diffs    : np.array,
+#                                nbins_z       : int,
+#                                nbins_e       : int,
+#                                range_z       : Tuple[float, float],
+#                                range_e       : Tuple[float, float],
+#                                energy        : str                 = 'S2e',
+#                                z             : str                 = 'Z',
+#                                fit           : FitType             = FitType.unbined,
+#                                n_min         : int                 = 100)->List[FitParTS]:
+#     """
+#     Returns fits to a (radial) sector of a RPHI-time series map
+#
+#         Parameters
+#         ----------
+#             sector
+#                 Radial sector where the fit is performed.
+#             selection_map
+#                 A map of selected events defined as Dict[int, List[KrEvent]]
+#             event_map
+#                 An event map defined as a DataFrame
+#             n_time_bins
+#                 Number of time bins for the time series.
+#             time_diffs
+#                 Vector of time differences for the time series.
+#             nbins_z
+#                 Number of bins in Z for the fit.
+#             nbins_e
+#                 Number of bins in energy.
+#             range_z
+#                 Range in Z for fit.
+#             range_e
+#                 Range in energy.
+#             energy:
+#                 Takes two values: S2e (uses S2e field in kre) or E (used E field on kre).
+#                 This field allows to select fits over uncorrected (S2e) or corrected (E) energies.
+#             fit
+#                 Selects fit type.
+#             n_min
+#                 Minimum number of events for fit.
+#
+#         Returns
+#         -------
+#             A List[FitParTS], one FitParTs per PHI sector.
+#
+#         @dataclass
+#         class FitParTS:             # Fit parameters Time Series
+#             ts   : np.array          # contains the time series (integers expressing time differences)
+#             e0   : np.array          # e0 fitted in time series
+#             lt   : np.array
+#             c2   : np.array
+#             e0u  : np.array          # e0 error fitted in time series
+#             ltu  : np.array
+#
+#     """
+#
+#     wedges    =[len(kre) for kre in selection_map.values() ]  # number of wedges per sector
+#     tfrst     = time_diffs[0]
+#     tlast     = time_diffs[-1]
+#
+#     fps =[]
+#     for i in range(wedges[sector]):
+#         if event_map[sector][i] > n_min:
+#             ts, masks =  get_time_series_df(n_time_bins, (tfrst, tlast), selection_map[sector][i])
+#             fp  = time_fcs_df(ts, masks, selection_map[sector][i],
+#                               nbins_z, nbins_e, range_z, range_e, energy, z, fit)
+#         else:
+#             warnings.warn(f'Cannot fit: events in s/w[{sector}][{i}] ={event_map[sector][i]} < {n_min}',
+#                          UserWarning)
+#
+#             dum = np.zeros(len(ts), dtype=float)
+#             dum.fill(np.nan)
+#             fp  = FitParTS(ts, dum, dum, dum, dum, dum)
+#
+#         fps.append(fp)
+#     return fps
