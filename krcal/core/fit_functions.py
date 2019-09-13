@@ -85,29 +85,6 @@ def gauss_seed(x, y, sigma_rel=0.05):
 #     return seed
 
 
-# def relative_errors(values, errors, default=0, percentual=False):
-#     """
-#     Compute relative errors from input values with safety checks.
-#     If the relative error cannot be computed, a default value is
-#     used. The errors can be in percent if the `percentual`
-#     argument is True.
-#     """
-#     ok         = values != 0
-#     scale      = 100 if percentual else 1
-#     rel_e      = np.empty_like(values)
-#     rel_e[ ok] = errors[ok] / np.abs(values[ok]) * scale
-#     rel_e[~ok] = default
-#     return rel_e
-
-
-# def to_relative(data, *args, **kwargs):
-#     """
-#     Produce another Measurement instance with relative instead of
-#     the absolute ones.
-#     """
-#     return Measurement(data.value, relative_errors(*data, *args, **kwargs))
-
-
 def quick_gauss_fit(data, bins):
     """
     Histogram input data and fit it to a gaussian with the parameters

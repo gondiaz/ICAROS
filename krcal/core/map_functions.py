@@ -332,13 +332,16 @@ def amap_max(amap : ASectorMap)->FitMapValue:
                       mapinfo   = None)
 
 
-# def amap_min(amap : ASectorMap)->FitMapValue:
-#     return ASectorMap(chi2  = amap.chi2.min().min(),
-#                       e0    = amap.e0.min().min(),
-#                       lt    = amap.lt.min().min(),
-#                       e0u   = amap.e0u.min().min(),
-#                       ltu   = amap.ltu.min().min(),
-#                       mapinfo   = None)
+#################################
+######### MAYBE USEFUL ##########
+#################################
+def amap_min(amap : ASectorMap)->FitMapValue:
+    return ASectorMap(chi2  = amap.chi2.min().min(),
+                      e0    = amap.e0.min().min(),
+                      lt    = amap.lt.min().min(),
+                      e0u   = amap.e0u.min().min(),
+                      ltu   = amap.ltu.min().min(),
+                      mapinfo   = None)
 
 
 def amap_replace_nan_by_mean(amap : ASectorMap, amMean : FitMapValue)->ASectorMap:
@@ -512,18 +515,3 @@ def find_outliers(dfmap : DataFrame,
             for il in lst:
                 logging.debug(f'outlier found, index = {il}, value ={ltc[il]}')
     return OL
-
-
-# def find_outliers_df(dfmap : DataFrame,
-#                      xr    : Tuple[float,float])->Dict[int, List[int]]:
-#     """Returns a dict where the keys are the DF columns. For each column
-#     the data is the list of indexes of outlayers
-#     """
-#     OL = {}
-#     for i in dfmap.columns:
-#         ltc = dfmap[i]
-#         gltc = ltc.dropna().between(*xr)
-#         lst = list(gltc[gltc==False].index)
-#         if len(lst) > 0:
-#             OL[i] = lst
-#     return OL

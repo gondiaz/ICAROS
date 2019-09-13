@@ -1,5 +1,5 @@
 import time
-from   datetime import datetime
+#from   datetime import datetime
 import numpy as np
 import pandas as pd
 from   pandas.core.frame import DataFrame
@@ -104,19 +104,3 @@ def divide_np_arrays(num : np.array, denom : np.array) -> np.array:
     ratio = np.zeros(len(denom))
     np.divide(num, denom, out=ratio, where=ok)
     return ratio
-
-
-# def file_numbers_from_file_range(file_range : Tuple[int, int])->List[str]:
-#     numbers = range(*file_range)
-#     N=[]
-#     for number in numbers:
-#         if number < 10:
-#             N.append(f"000{number}")
-#         elif 10 <= number < 100:
-#             N.append(f"00{number}")
-#         elif 100 <= number < 1000:
-#             N.append(f"0{number}")
-#         else:
-#             N.append(f"{number}")
-#
-#     return N
