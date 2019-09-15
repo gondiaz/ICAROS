@@ -1,19 +1,20 @@
 import time
 #from   datetime import datetime
 import numpy as np
-import pandas as pd
-from   pandas.core.frame import DataFrame
+#import pandas as pd
+from  pandas.core.frame import DataFrame
 
-from   typing      import Tuple, List, Iterable
+#from   typing      import Tuple, List, Iterable
+from   typing      import Iterable
 from . kr_types    import Number
-from   numpy      import pi
+#from   numpy      import pi
 from   invisible_cities.evm.ic_containers  import Measurement
 
 NN = np.nan
 
-import sys
-import logging
-log = logging.getLogger()
+#import sys
+#import logging
+#log = logging.getLogger()
 
 
 def timeit(f):
@@ -72,8 +73,11 @@ def in_range(data, minval=-np.inf, maxval=np.inf):
 #     return df.eq(True).all().all()
 
 
-# def phirad_to_deg(r : float)-> float:
-#     return (r + pi) * 180 / pi
+#################################
+######### MAYBE USEFUL ##########
+#################################
+def phirad_to_deg(r : float)-> float:
+    return (r + np.pi) * 180 / np.pi
 
 
 def value_from_measurement(mL : Iterable[Measurement]) -> np.array:

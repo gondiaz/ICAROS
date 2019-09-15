@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 from   invisible_cities.evm  .ic_containers  import Measurement
 from   invisible_cities.core.system_of_units_c import units
 
-from   invisible_cities.core.core_functions import loc_elem_1d
+#from   invisible_cities.core.core_functions import loc_elem_1d
 import invisible_cities.core.fit_functions as fitf
 
 from . stat_functions       import mean_and_std
@@ -27,8 +27,8 @@ from . core_functions       import divide_np_arrays
 from typing                 import Tuple
 from . kr_types             import S1D, S2D
 from pandas.core.frame      import DataFrame
-from . kr_types             import Number, Int, Range
-from typing                 import List, Tuple, Sequence, Iterable
+from . kr_types             import Int, Range
+from typing                 import List, Tuple
 from . kr_types             import KrEvent
 
 

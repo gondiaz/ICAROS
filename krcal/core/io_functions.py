@@ -5,13 +5,13 @@ import pandas as pd
 import tables as tb
 
 from   typing         import Tuple, Dict, List, Iterable
-from . kr_types       import Number
+#from . kr_types       import Number
 from . kr_types       import ASectorMap
 from . kr_types       import KrFileName
 from pandas           import DataFrame, Series
 
 #from . core_functions import file_numbers_from_file_range
-from pandas import Series
+
 
 def filenames_from_paths(run_number  : int,
                          input_path  : str,

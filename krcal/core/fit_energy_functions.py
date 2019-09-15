@@ -13,7 +13,7 @@ Documentation
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from typing      import List, Dict, Tuple, Sequence, Iterable
+from typing      import List, Dict, Tuple, Iterable
 import warnings
 
 #import matplotlib.dates  as md
@@ -38,12 +38,12 @@ from . kr_types import FitResult
 from . kr_types import HistoPar
 from . kr_types import FitCollection
 from . kr_types import PlotLabels
-from . kr_types import KrEvent
+#from . kr_types import KrEvent
 
-from . kr_types        import PlotLabels
+#from . kr_types        import PlotLabels
 from . histo_functions import plot_histo
 from scipy.optimize import OptimizeWarning
-from numpy import sqrt, pi
+#from numpy import sqrt, pi
 from . stat_functions       import relative_error_ratio
 
 
@@ -75,15 +75,15 @@ def gaussian_parameters(x : np.array, range : Tuple[Number], bin_size : float = 
     and the amplitude (inverse of N).
     """
     mu, std = mean_and_std(x, range)
-    ff     = sqrt(2 * pi) * std
+    ff     = np.sqrt(2 * np.pi) * std
 
     amp     = len(x) * bin_size / ff
 
     sel  = in_range(x, *range)
     N = len(x[sel])              # number of samples in range
-    mu_u  = std / sqrt(N)
-    std_u = std / sqrt(2 * (N -1))
-    amp_u = sqrt(2 * np.pi) * std_u
+    mu_u  = std / np.sqrt(N)
+    std_u = std / np.sqrt(2 * (N -1))
+    amp_u = np.sqrt(2 * np.pi) * std_u
 
     return GaussPar(mu  = Measurement(mu, mu_u),
                     std = Measurement(std, std_u),

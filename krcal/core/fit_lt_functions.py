@@ -32,8 +32,8 @@ from . core_functions  import  value_from_measurement
 from . core_functions  import  uncertainty_from_measurement
 from . core_functions  import  NN
 
-from invisible_cities.core .stat_functions import poisson_sigma
-from invisible_cities.icaro. hst_functions import shift_to_bin_centers
+#from invisible_cities.core .stat_functions import poisson_sigma
+#rom invisible_cities.icaro. hst_functions import shift_to_bin_centers
 
 from . kr_types import FitPar
 from . kr_types import FitParTS
@@ -42,15 +42,15 @@ from . kr_types import HistoPar, HistoPar2
 from . kr_types import FitCollection, FitCollection2
 
 
-from . kr_types       import FitType, MapType
+from . kr_types       import FitType
 from . kr_types       import Number, Range
 from . kr_types       import KrEvent
 
-from scipy.optimize    import OptimizeWarning
-from . histo_functions import labels
-from numpy import sqrt, pi
+#from scipy.optimize    import OptimizeWarning
+#from . histo_functions import labels
+#from numpy import sqrt, pi
 
-import sys
+#import sys
 import logging
 log = logging.getLogger()
 

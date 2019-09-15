@@ -13,14 +13,13 @@ Documentation
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 
-import numpy as np
-import pandas as pd
+#import numpy as np
+#import pandas as pd
 import seaborn as sns
 from . kr_types        import MapType
 from . kr_types        import ASectorMap
 
-from typing            import List, Tuple, Dict, Sequence, Iterable
-from typing            import Optional
+from typing            import List, Tuple, Optional
 
 from numpy import sqrt
 from pandas import DataFrame

@@ -1,11 +1,6 @@
 import numpy as np
 
-from typing      import Tuple
-from typing      import Dict
-from typing      import List
-from typing      import TypeVar
-from typing      import Optional
-
+from typing      import Tuple, Dict, List, TypeVar, Optional
 from enum        import Enum
 
 from dataclasses import dataclass

@@ -11,20 +11,20 @@ Documentation
     Insert documentation https
 """
 import numpy as np
-import pandas as pd
+#import pandas as pd
 import datetime
 from   pandas.core.frame import DataFrame
 
 from   invisible_cities.icaro. hst_functions import shift_to_bin_centers
 
-from . kr_types             import Number, Int, Range, Array
+from . kr_types             import Int, Range
 from . kr_types             import KrBins, KrNBins, KrRanges, KrTimes
-from typing                 import List, Tuple, Sequence, Iterable, Dict
+from typing                 import Tuple
 
 
-import sys
-import logging
-log = logging.getLogger()
+#import sys
+#import logging
+#log = logging.getLogger()
 
 
 def kr_bins(xxrange   : Range = (-220,  220),

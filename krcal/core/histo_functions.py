@@ -1,5 +1,5 @@
 import numpy as np
-import random
+#import random
 
 import matplotlib.pyplot as plt
 from . import fit_functions_ic as fitf

@@ -14,7 +14,6 @@ from invisible_cities.core.stat_functions    import poisson_sigma
 from invisible_cities.evm.ic_containers      import FitFunction
 from . core_functions                        import  NN
 
-
 def get_errors(cov):
     """
     Find errors from covariance matrix
