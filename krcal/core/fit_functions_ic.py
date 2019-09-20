@@ -4,6 +4,8 @@ A set of functions for data fitting.
 GML November 2016
 """
 
+## EQUIVALENT MODULE to invisible_cities.core.fit_functions
+
 import numpy  as np
 import pandas as pd
 import scipy.optimize
